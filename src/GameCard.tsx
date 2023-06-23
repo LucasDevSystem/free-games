@@ -11,9 +11,9 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 type Game = {
   id: number;
   title: string;
-  thumbnails: string;
+  thumbnail: string;
   short_description: string;
-  gamer_url: string;
+  game_url: string;
   genre: string;
   platform: string;
   publisher: string;
@@ -22,25 +22,13 @@ type Game = {
   freetogame_profrile_url: string;
 };
 
-// exemplo de dados
-const cardData = {
-  id: 540,
-  title: "Overwatch 2",
-  thumbnail: "https://www.freetogame.com/g/540/thumbnail.jpg",
-  short_description:
-    "A hero-focused first-person team shooter from Blizzard Entertainment.",
-  game_url: "https://www.freetogame.com/open/overwatch-2",
-  genre: "Shooter",
-  platform: "PC (Windows)",
-  publisher: "Activision Blizzard",
-  developer: "Blizzard Entertainment",
-  release_date: "2022-10-04",
-  freetogame_profile_url: "https://www.freetogame.com/overwatch-2",
+type GameCardProps = {
+  cardData: Game;
 };
 
-const GameCard = () => (
+const GameCard: React.FC<GameCardProps> = ({ cardData }) => (
   <div>
-    <Card title="nato" style={{ width: 500 }}>
+    <Card title="nato" style={{ width: "100%" }}>
       <CardHeader
         avatar={
           <Avatar sx={{ width: 60, height: 60 }} src={cardData.thumbnail} />
@@ -50,8 +38,11 @@ const GameCard = () => (
             <ArrowForwardIcon />
           </IconButton>
         }
-        title={cardData.title}
-        titleTypographyProps={{ style: { fontWeight: "bold", fontSize: 18 } }}
+        title={
+          <Typography sx={{ fontWeight: "bold", fontSize: 18 }} noWrap>
+            {cardData.title}
+          </Typography>
+        }
         subheader={
           <div>
             <Button
