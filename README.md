@@ -9,16 +9,16 @@ Este projeto foi desenvolvido usando React, com responsividade para dispositivos
 
 
 ## Rodando o Projeto   
-Clone the project  
+Clone o projeto
 
 ~~~bash  
-  git clone https://github.com/SumitNalavade/VS-Code-ReadMe-Editor
+  git clone https://github.com/LucasDevSystem/react-mui-axios-demo
 ~~~
 
-Go to the project directory  
+Va para o diretorio do projeto 
 
 ~~~bash  
-  cd vscode-readme-editor
+  cd react-mui-axios-demo
 ~~~
 
 Instale as dependencias
