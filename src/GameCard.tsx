@@ -28,18 +28,25 @@ type GameCardProps = {
 
 const GameCard: React.FC<GameCardProps> = ({ cardData }) => (
   <div>
-    <Card title="nato" style={{ width: "100%" }}>
+    <Card
+      title={cardData.title}
+      style={{ width: "100%", backgroundColor: "#222327", borderRadius: 25 }}
+    >
       <CardHeader
         avatar={
           <Avatar sx={{ width: 60, height: 60 }} src={cardData.thumbnail} />
         }
         action={
           <IconButton href={cardData.game_url} aria-label="settings">
-            <ArrowForwardIcon />
+            <ArrowForwardIcon sx={{ color: "#27b4a4" }} />
           </IconButton>
         }
         title={
-          <Typography sx={{ fontWeight: "bold", fontSize: 18 }} noWrap>
+          <Typography
+            color={"white"}
+            sx={{ fontWeight: "bold", fontSize: 18 }}
+            noWrap
+          >
             {cardData.title}
           </Typography>
         }
@@ -49,12 +56,17 @@ const GameCard: React.FC<GameCardProps> = ({ cardData }) => (
               color="info"
               variant="contained"
               size="small"
-              style={{ textTransform: "none", padding: 0 }}
+              style={{
+                textTransform: "none",
+                padding: 0,
+                color: "white",
+                backgroundColor: "gray",
+              }}
               disabled={true}
             >
               {cardData.genre}
             </Button>
-            <Typography>{cardData.release_date}</Typography>
+            <Typography color={"white"}>{cardData.release_date}</Typography>
           </div>
         }
       />

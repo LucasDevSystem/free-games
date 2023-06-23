@@ -47,10 +47,24 @@ const Search: React.FC<SearchProps> = ({ genreOptions, onSearch }) => {
 
   return (
     <div>
-      <div style={{ display: "flex", justifyContent: "center", padding: 20 }}>
+      <div
+        style={{ display: "flex", justifyContent: "center", paddingTop: 20 }}
+      >
         <TextField
-          sx={{ width: "50%" }}
+          style={{
+            width: "50%",
+            backgroundColor: "#222327",
+            borderRadius: 20,
+            textDecorationColor: "red",
+            border: "none",
+            borderColor: "red",
+            borderWidth: 0,
+          }}
+          sx={{ "& fieldset": { border: "none" }, input: { color: "white" } }}
           onInput={handleChange}
+          InputProps={{
+            disableUnderline: true,
+          }}
           id="outlined-basic"
           value={text}
           variant="outlined"
@@ -58,23 +72,27 @@ const Search: React.FC<SearchProps> = ({ genreOptions, onSearch }) => {
           size="medium"
         />
       </div>
-      <div style={{ display: "flex", justifyContent: "center", padding: 0 }}>
-        {genreOptions.map((genre: string) => (
-          <Button
-            key={genre}
-            color="info"
-            variant="contained"
-            size="small"
-            style={{
-              textTransform: "none",
-              marginRight: 5,
-              backgroundColor: selectedGenres.includes(genre) ? "blue" : "gray",
-            }}
-            onClick={() => onSelectGenre(genre)}
-          >
-            {genre}
-          </Button>
-        ))}
+      <div style={{ display: "flex", justifyContent: "center", padding: 10 }}>
+        <div style={{ width: "50%" }}>
+          {genreOptions.map((genre: string) => (
+            <Button
+              key={genre}
+              color="info"
+              variant="contained"
+              size="small"
+              style={{
+                textTransform: "none",
+                margin: 3,
+                backgroundColor: selectedGenres.includes(genre)
+                  ? "#27b4a4"
+                  : "gray",
+              }}
+              onClick={() => onSelectGenre(genre)}
+            >
+              {genre}
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );

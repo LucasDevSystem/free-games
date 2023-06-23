@@ -146,7 +146,7 @@ function App() {
       />
       {loading ? (
         <div style={{ position: "fixed", top: "50%", left: "50%" }}>
-          <CircularProgress />
+          <CircularProgress sx={{color: "#27b4a4" }} />
         </div>
       ) : (
         <div>
