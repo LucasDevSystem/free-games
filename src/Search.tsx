@@ -82,6 +82,7 @@ const Search: React.FC<SearchProps> = ({ genreOptions, onSearch }) => {
               size="small"
               style={{
                 textTransform: "none",
+                fontSize: 11,
                 margin: 3,
                 backgroundColor: selectedGenres.includes(genre)
                   ? "#27b4a4"
