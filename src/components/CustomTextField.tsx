@@ -28,7 +28,7 @@ const CustomTextField = ({
   label,
 }: {
   onChange: (e: any) => void;
-  error: string;
+  error?: string;
   label: string;
 }) => (
   <StyledTextField
