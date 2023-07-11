@@ -15,18 +15,18 @@ export default function AlertModal({ isModalOpen, onClose }: any) {
           left: "50%",
           transform: "translate(-50%, -50%)",
           border: "2px solid #000",
-          width: 400,
+          maxWidth: 400,
         }}
       >
         <Card sx={{ minWidth: 275, backgroundColor: "#222327" }}>
           <CardContent>
             <Typography variant="h5" component="div">
-              Ops!! Login Nescessario
+              Oops! É necessário fazer login
             </Typography>
             <Divider sx={{ margin: 2 }}></Divider>
             <Typography variant="body1">
-              Entre na sua conta para continuar. Para uma melhor experiência,
-              precisamos que esteja logado.
+              Entre na sua conta para continuar e tenha uma experiência ainda
+              melhor. Faça o login agora mesmo!
             </Typography>
           </CardContent>
           <CardActions sx={{ justifyContent: "flex-end" }}>
