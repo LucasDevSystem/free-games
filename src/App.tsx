@@ -1,160 +1,103 @@
-import React, { useEffect, useState } from "react";
-import { AxiosError } from "axios";
+import React, { useState, useEffect, createContext } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import { auth } from "./firebase/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { createTheme, ThemeProvider } from "@mui/material";
 
-import api from "./api";
-import GameCardList from "./GameCardList";
-import Search from "./Search";
-import { CircularProgress, Snackbar } from "@mui/material";
+import SignupPage from "./pages/signup";
+import LoginPage from "./pages/login";
+import HomePage from "./pages/home";
+import { colors } from "./global/colors";
 
-/*
-@author Lucas Emanuel
-*/
+// o context foi nescessario ate pra deixar mais simples
+// o acesso dessas variaveis entre telas
+export const AuthContext = createContext({
+  currentUser: { email: "", uid: "" },
+  setCurrentUser: (user: { email: string; uid: string }) => {},
+});
 
-type Game = {
-  id: number;
-  title: string;
-  thumbnails: string;
-  short_description: string;
-  gamer_url: string;
-  genre: string;
-  platform: string;
-  publisher: string;
-  developer: string;
-  release_date: string;
-  freetogame_profrile_url: string;
-};
-
-type Query = {
-  genres: string[];
-  searchStr: string;
-};
-type Errors = "TIMEOUT" | "SERVER_ERR" | "UNEXPECTED";
-
-const SERVER_ERRORS_5XX = [500, 502, 503, 504, 507, 508, 509];
+const theme = createTheme({
+  components: {
+    MuiCircularProgress: {
+      defaultProps: {
+        sx: {
+          color: colors.green,
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color: colors.white,
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          background: colors.card,
+          "&:focus": {
+            outline: "none",
+          },
+        },
+      },
+    },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          borderColor: "#b8bbbf",
+          color: "#b8bbbf",
+          "&::before, &::after": {
+            borderColor: "#b8bbbf",
+          },
+        },
+      },
+    },
+    MuiPagination: {
+      styleOverrides: {
+        root: {
+          button: {
+            color: colors.green,
+          },
+        },
+      },
+    },
+    
+  },
+});
 
 function App() {
-  const [loading, setLoading] = useState(false);
-  const [dataList, setDataList] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [error, setError] = useState("");
+  const [currentUser, setCurrentUser] = useState({ email: "", uid: "" });
 
-  /**
-   * obtem o tipo de erro
-   * @param error erro emitido pelo axios
-   * @returns {Errors} tipo de erro str
-   */
-  function getRequestErrType(error: AxiosError): Errors {
-    const code = error?.code;
-    const status = error?.response?.status || 0;
-
-    // request timeout
-    if (code === "ECONNABORTED") return "TIMEOUT";
-    // server error
-    if (SERVER_ERRORS_5XX.includes(status)) return "SERVER_ERR";
-
-    return "UNEXPECTED";
-  }
-
-  /**
-   * Pelo tipo de erro identificado notifica o usuario
-   * @param errorType
-   */
-  function handleReqType(errorType: Errors) {
-    switch (errorType) {
-      // notifica usuario sobre o ocorrido
-      case "TIMEOUT":
-        setError("O servidor demorou para responder, tente mais tarde");
-        break;
-      case "UNEXPECTED":
-        setError(
-          "O servidor não conseguirá responder por agora, tente voltar novamente mais tarde"
-        );
-        break;
-      // recarrega a pagina
-      case "SERVER_ERR":
-        setError("O servidor fahou em responder, tente recarregar a página");
-        break;
-      default:
-        setError("O servidor demorou para responder, tente mais tarde");
-        break;
-    }
-  }
-
-  async function getData() {
-    setLoading(true);
-    try {
-      const { data = Array<Game> } = await api.get("/data/", {
-        headers: {
-          "dev-email-address": "teste@gmail.com",
-        },
-      });
-      setDataList(data);
-      setFilteredData(data);
-    } catch (error: any) {
-      handleReqType(getRequestErrType(error));
-    } finally {
-      setLoading(false);
-    }
-  }
-  function getGenreOptions() {
-    let uniqueGenres: string[] = [];
-    dataList.map((game: Game) => {
-      if (!uniqueGenres.includes(game.genre)) {
-        uniqueGenres.push(game.genre);
-      }
-    });
-
-    return uniqueGenres;
-  }
-
-  // COMPONENTS CALLBACKS
-
-  function onSearch(query: Query) {
-    const { genres, searchStr } = query;
-    // filtra pela pesquisa e pelos generos dos jogos
-    const filtered = dataList.filter((game: Game) => {
-      if (genres.length) {
-        let contain = !!(
-          game.title.toLowerCase().includes(searchStr.toLowerCase()) &&
-          genres.includes(game.genre)
-        );
-
-        return contain;
-      }
-
-      return game.title.toLowerCase().includes(searchStr.toLowerCase());
-    });
-
-    setFilteredData(filtered);
-  }
-
-  const genreOptions: string[] = getGenreOptions();
-  // tenta obter os dados iniciais
   useEffect(() => {
-    getData();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser({ email: user?.email || "", uid: user.uid });
+      } else {
+        setCurrentUser({ email: "", uid: "" });
+      }
+    });
+
+    return () => unsubscribe(); // funcao cleanup
   }, []);
 
   return (
-    <div>
-      <Snackbar
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        open={!!error}
-        message={error}
-      />
-      {loading ? (
-        <div style={{ position: "fixed", top: "50%", left: "50%" }}>
-          <CircularProgress sx={{color: "#27b4a4" }} />
-        </div>
-      ) : (
-        <div>
-          <Search onSearch={onSearch} genreOptions={genreOptions} />
-          <GameCardList dataList={filteredData} />{" "}
-        </div>
-      )}
-    </div>
+    <Router>
+      <div>
+        <section>
+          <AuthContext.Provider value={{ currentUser, setCurrentUser }}>
+            <ThemeProvider theme={theme}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+              </Routes>
+            </ThemeProvider>
+          </AuthContext.Provider>
+        </section>
+      </div>
+    </Router>
   );
 }
 
