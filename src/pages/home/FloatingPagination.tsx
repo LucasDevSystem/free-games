@@ -10,7 +10,7 @@ const FloatingPagination = ({ onChagePage, maxPages }: any) => {
         left: 0,
         right: 0,
         margin: "0 auto",
-        maxWidth: "400px",
+        maxWidth: "380px",
         minWidth: "200px",
         borderRadius: 18,
         background: colors.lightCard,
@@ -29,7 +29,7 @@ const FloatingPagination = ({ onChagePage, maxPages }: any) => {
       >
         <Pagination
           count={maxPages}
-          size="large"
+          size="medium"
           onChange={(e, value) => onChagePage(value)}
           color="primary"
         />
