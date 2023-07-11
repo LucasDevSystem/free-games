@@ -57,6 +57,7 @@ const GameCard: React.FC<GameCardProps> = ({
         position: "relative",
         "&:hover": {
           transform: "scale(1.1)",
+          transition: "transform 0.2s ease-in-out",
         },
       }}
     >
