@@ -47,6 +47,7 @@ const SignupPage = () => {
 
     return false;
   }
+
   const handleSubmit = async () => {
     try {
       setEmailError("");
@@ -71,9 +72,7 @@ const SignupPage = () => {
       navigate("/login");
     } catch (error: any) {
       // algum erro inesperado notifica usuario :)
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      setApiError(errorCode + ":" + errorMessage);
+      setApiError("Oops! Algo deu errado 😢. Por favor, verifique as informações.");
     }
   };
 
@@ -107,18 +106,20 @@ const SignupPage = () => {
             label="email"
             onChange={(e) => setEmail(e.target.value)}
             error={emailError}
+            type={"email"}
           />
           <CustomTextField
             label="Senha"
             onChange={(e) => setPassword(e.target.value)}
             error={passwordError}
+            type="password"
           />
           <CustomTextField
             label="Confirme a senhha"
             onChange={(e) => setConfirmationPassword(e.target.value)}
             error=""
+            type="password"
           />
-
           <Button
             onClick={() => handleSubmit()}
             fullWidth
@@ -129,7 +130,11 @@ const SignupPage = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link fontSize={16} onClick={()=> navigate('/login')} color={colors.green}>
+              <Link
+                fontSize={16}
+                onClick={() => navigate("/login")}
+                color={colors.green}
+              >
                 {"Ja tenha uma conta?"}
               </Link>
             </Grid>

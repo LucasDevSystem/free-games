@@ -39,9 +39,7 @@ const LoginPage = () => {
 
       navigate("/");
     } catch (error: any) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      setAuthError(errorCode + ":" + errorMessage);
+      setAuthError("Oops! Algo deu errado 😢. Por favor, verifique as informações.");
     }
   };
   return (
@@ -74,12 +72,13 @@ const LoginPage = () => {
           <CustomTextField
             label="Email"
             onChange={(e) => setEmail(e.target.value)}
+            type="email"
           />
           <CustomTextField
             onChange={(e) => setPassword(e.target.value)}
             label="Senha"
+            type="password"
           />
-
           <Button
             onClick={() => handleSubmit()}
             fullWidth

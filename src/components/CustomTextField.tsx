@@ -26,14 +26,18 @@ const CustomTextField = ({
   onChange,
   error,
   label,
+  type,
 }: {
   onChange: (e: any) => void;
   error?: string;
+  type?: "email" | "password";
   label: string;
 }) => (
   <StyledTextField
     margin="normal"
     onChange={onChange}
+    type={type}
+    name={type}
     required
     fullWidth
     label={label}
