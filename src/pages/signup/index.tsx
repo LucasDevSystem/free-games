@@ -129,7 +129,7 @@ const SignupPage = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link fontSize={16} href="/login" color={colors.green}>
+              <Link fontSize={16} onClick={()=> navigate('/login')} color={colors.green}>
                 {"Ja tenha uma conta?"}
               </Link>
             </Grid>

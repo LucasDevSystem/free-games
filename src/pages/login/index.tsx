@@ -90,7 +90,11 @@ const LoginPage = () => {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link fontSize={16} href="/signup" color="#27b4a4">
+              <Link
+                fontSize={16}
+                onClick={() => navigate("/signup")}
+                color="#27b4a4"
+              >
                 {"Não tem uma conta?"}
               </Link>
             </Grid>

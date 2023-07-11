@@ -4,8 +4,10 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { Box, Divider, Modal } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function AlertModal({ isModalOpen, onClose }: any) {
+  const navigate = useNavigate();
   return (
     <Modal open={isModalOpen} onClose={onClose}>
       <Box
@@ -41,7 +43,7 @@ export default function AlertModal({ isModalOpen, onClose }: any) {
             <Button
               size="small"
               sx={{ bgcolor: "#27b4a4" }}
-              href="/login"
+              onClick={() => navigate("/login")}
               variant="contained"
             >
               Fazer login
