@@ -72,76 +72,89 @@ const SignupPage = () => {
       navigate("/login");
     } catch (error: any) {
       // algum erro inesperado notifica usuario :)
-      setApiError("Oops! Algo deu errado 😢. Por favor, verifique as informações.");
+      setApiError(
+        "Oops! Algo deu errado 😢. Por favor, verifique as informações."
+      );
     }
   };
 
   return (
-    <Container maxWidth="xs">
-      <Snackbar
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        open={!!apiError}
-      >
-        <Alert severity="error">{apiError}</Alert>
-      </Snackbar>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          backgroundColor: "#222327",
-          borderRadius: 4,
-          padding: 8,
-        }}
-      >
-        <Typography component="h1" color="white" variant="h5">
-          Crie uma Conta
-        </Typography>
-        <Box sx={{ mt: 1 }}>
-          <CustomTextField
-            label="email"
-            onChange={(e) => setEmail(e.target.value)}
-            error={emailError}
-            type={"email"}
-          />
-          <CustomTextField
-            label="Senha"
-            onChange={(e) => setPassword(e.target.value)}
-            error={passwordError}
-            type="password"
-          />
-          <CustomTextField
-            label="Confirme a senhha"
-            onChange={(e) => setConfirmationPassword(e.target.value)}
-            error=""
-            type="password"
-          />
-          <Button
-            onClick={() => handleSubmit()}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2, bgcolor: colors.green, color: colors.white }}
-          >
-            Continuar
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link
-                fontSize={16}
-                onClick={() => navigate("/login")}
-                color={colors.green}
-              >
-                {"Ja tenha uma conta?"}
-              </Link>
+    <div
+      style={{
+        position: "absolute",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        backgroundImage: `url(${process.env.PUBLIC_URL}/background.jpg)`,
+      }}
+    >
+      <Container maxWidth="xs">
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          open={!!apiError}
+        >
+          <Alert severity="error">{apiError}</Alert>
+        </Snackbar>
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            backgroundColor: "#222327",
+            borderRadius: 4,
+            padding: 8,
+          }}
+        >
+          <Typography component="h1" color="white" variant="h5">
+            Crie uma Conta
+          </Typography>
+          <Box sx={{ mt: 1 }}>
+            <CustomTextField
+              label="email"
+              onChange={(e) => setEmail(e.target.value)}
+              error={emailError}
+              type={"email"}
+            />
+            <CustomTextField
+              label="Senha"
+              onChange={(e) => setPassword(e.target.value)}
+              error={passwordError}
+              type="password"
+            />
+            <CustomTextField
+              label="Confirme a senhha"
+              onChange={(e) => setConfirmationPassword(e.target.value)}
+              error=""
+              type="password"
+            />
+            <Button
+              onClick={() => handleSubmit()}
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2, bgcolor: colors.green, color: colors.white }}
+            >
+              Continuar
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link
+                  fontSize={16}
+                  onClick={() => navigate("/login")}
+                  color={colors.green}
+                >
+                  {"Ja tenha uma conta?"}
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </div>
   );
 };
 

@@ -88,7 +88,7 @@ const Search: React.FC<SearchProps> = ({ genreOptions, onSearch }) => {
           id="outlined-basic"
           value={text}
           variant="outlined"
-          placeholder="Pesquise o jogo..."
+          placeholder="Pesquisar..."
           size="medium"
         />
         <CustomSelect
