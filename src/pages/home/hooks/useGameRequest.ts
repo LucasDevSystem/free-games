@@ -56,6 +56,7 @@ export const useGameRequest = (shouldUpdate: string) => {
 
   useEffect(() => {
     (async function () {
+      if (loading) return;
       setLoading(true);
       try {
         const { data = Array<ApiGame> } = await api.get("/data/");
