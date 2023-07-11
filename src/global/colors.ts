@@ -8,4 +8,6 @@ export const colors = {
   gray: "#222327",
   ligthGray: "#b8bbbf",
   white: "#edecec",
+  red: "#d60841",
+  gold: "#ffcd3c"
 };
