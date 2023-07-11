@@ -1,0 +1,7 @@
+.star {
+    transition: transform 0.3s ease;
+  }
+  
+.star.selected {
+    transform: scale(1) rotate(90deg);
+  }
