@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-document.body.style.backgroundColor = "#171717";
+document.body.style.backgroundColor = "#141414";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
