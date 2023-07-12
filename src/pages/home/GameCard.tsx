@@ -82,7 +82,7 @@ const GameCard: React.FC<GameCardProps> = ({
           size="small"
           style={{
             textTransform: "none",
-            padding: 0,
+            padding: 4,
             color: colors.white,
             backgroundColor: colors.lightCard,
           }}
