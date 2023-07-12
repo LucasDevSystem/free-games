@@ -7,14 +7,17 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   Link,
   Snackbar,
   Typography,
 } from "@mui/material";
+import { ArrowBack } from "@mui/icons-material";
 
 import CustomTextField from "../../components/CustomTextField";
 import { auth } from "../../firebase/firebase";
 import { colors } from "../../global/colors";
+
 
 const SignupPage = () => {
   // bastante useState :( talvez hookform seria ideal para um form maior
@@ -104,16 +107,30 @@ const SignupPage = () => {
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
             backgroundColor: "#222327",
             borderRadius: 4,
-            padding: 8,
           }}
         >
-          <Typography component="h1" color="white" variant="h5">
+          <Box sx={{ position: "relative", padding: 1 }}>
+            <IconButton onClick={() => navigate(-1)}>
+              <ArrowBack
+                sx={{ color: colors.green, width: 28, height: 28 }}
+              ></ArrowBack>
+            </IconButton>
+          </Box>
+          <Typography sx={{ textAlign: "center" }} component="h1" variant="h5">
             Crie uma Conta
           </Typography>
-          <Box sx={{ mt: 1 }}>
+          <Box
+            sx={{
+              mt: 1,
+              alignItems: "center",
+              paddingLeft: 6,
+              paddingRight: 6,
+              paddingBottom: 6,
+              paddingTop:1
+            }}
+          >
             <CustomTextField
               label="email"
               onChange={(e) => setEmail(e.target.value)}

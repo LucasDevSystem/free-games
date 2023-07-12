@@ -7,6 +7,7 @@ import {
   Button,
   Container,
   Grid,
+  IconButton,
   Link,
   Snackbar,
   Typography,
@@ -15,6 +16,8 @@ import {
 import { auth } from "../../firebase/firebase";
 import { AuthContext } from "../../App";
 import CustomTextField from "../../components/CustomTextField";
+import { ArrowBack } from "@mui/icons-material";
+import { colors } from "../../global/colors";
 
 const LoginPage = () => {
   const authContext = useContext(AuthContext);
@@ -64,21 +67,36 @@ const LoginPage = () => {
         >
           <Alert severity="error">{authError}</Alert>
         </Snackbar>
+
         <Box
           sx={{
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
             backgroundColor: "#222327",
             borderRadius: 4,
-            padding: 8,
           }}
         >
-          <Typography component="h1" variant="h5">
+          <Box sx={{ position: "relative", padding: 1 }}>
+            <IconButton onClick={() => navigate(-1)}>
+              <ArrowBack
+                sx={{ color: colors.green, width: 28, height: 28 }}
+              ></ArrowBack>
+            </IconButton>
+          </Box>
+          <Typography sx={{ textAlign: "center" }} component="h1" variant="h5">
             Entre na sua conta
           </Typography>
-          <Box sx={{ mt: 1 }}>
+          <Box
+            sx={{
+              mt: 1,
+              alignItems: "center",
+              paddingLeft: 6,
+              paddingRight: 6,
+              paddingBottom: 6,
+              paddingTop:1
+            }}
+          >
             <CustomTextField
               label="Email"
               onChange={(e) => setEmail(e.target.value)}
