@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { SearchRounded } from "@mui/icons-material";
+import { Favorite, SearchRounded, Star } from "@mui/icons-material";
 import { InputAdornment, TextField } from "@mui/material";
+import SportsEsportsIcon from "@mui/icons-material/SportsEsports";
 
-import { Query } from ".";
 import CustomSelect from "../../components/CustomSelect";
+import { Query } from ".";
+import { colors } from "../../global/colors";
 
 type SearchProps = {
   onSearch: (query: Query) => void;
@@ -36,7 +38,7 @@ const Search: React.FC<SearchProps> = ({ genreOptions, onSearch }) => {
       },
     });
   }
-  
+
   const onChangeTxt = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setText(value);
@@ -63,7 +65,7 @@ const Search: React.FC<SearchProps> = ({ genreOptions, onSearch }) => {
 
   return (
     <div>
-      <div style={{ paddingTop: 20 }}>
+      <div style={{ marginTop: 30 }}>
         <TextField
           InputProps={{
             endAdornment: (
@@ -73,39 +75,47 @@ const Search: React.FC<SearchProps> = ({ genreOptions, onSearch }) => {
             ),
           }}
           style={{
-            minWidth: 300,
-            maxWidth: 300,
+            width: 300,
             float: "right",
-            backgroundColor: "#222327",
+            backgroundColor: colors.lightCard,
             borderRadius: 20,
-            textDecorationColor: "red",
-            border: "none",
-            borderColor: "red",
             borderWidth: 0,
           }}
-          sx={{ "& fieldset": { border: "none" }, input: { color: "white" } }}
+          sx={{
+            "& fieldset": { border: "none" },
+            input: { color: "white" },
+            m: 1,
+          }}
           onInput={onChangeTxt}
-          id="outlined-basic"
           value={text}
           variant="outlined"
           placeholder="Pesquisar..."
           size="medium"
         />
         <CustomSelect
+          value={rating}
+          label="Avaliação"
+          onChange={onChangeRating}
+          icon={<Star sx={{ height: 20, width: 20 }} fontSize="small" />}
+          options={RATING_OPTIONS}
+        />
+
+        <CustomSelect
           value={favorite}
           label="Favoritos"
           onChange={onChangeFav}
+          icon={<Favorite sx={{ height: 20, width: 20 }} fontSize="small" />}
           options={FAV_OPTIONS}
         />
         <CustomSelect
-          value={rating}
-          label="Avaliacao"
-          onChange={onChangeRating}
-          options={RATING_OPTIONS}
-        />
-        <CustomSelect
           value={genre}
-          label="Genero"
+          label="Gênero"
+          icon={
+            <SportsEsportsIcon
+              sx={{ height: 20, width: 20 }}
+              fontSize="small"
+            />
+          }
           onChange={onChangeGenre}
           options={genreOptions}
         />

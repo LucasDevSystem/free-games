@@ -1,32 +1,60 @@
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/system";
 import { colors } from "../global/colors";
 
 const StyledSelect = styled(Select)`
-  & .MuiOutlinedInput-notchedOutline {
-    border-color: #edecec !important;
-  }
   & .MuiFilledInput-root {
-    border-bottom: 2px solid #edecec !important;
+    border-bottom: 23px solid #edecec !important;
   }
   & .MuiInput-root {
-    border-bottom: 2px solid #edecec !important;
+    border-bottom: 23px solid #edecec !important;
   }
   & .MuiSelect-icon {
     color: #edecec !important;
   }
 `;
 
-const CustomSelect = ({ label, options, value, onChange }: any) => {
+const CustomSelect = ({ label, options, value, onChange, icon }: any) => {
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-      <InputLabel style={{ color: colors.white }}>{label}</InputLabel>
+    <FormControl sx={{ minWidth: 130, m: 1 }}>
+      <InputLabel>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            color: colors.defaultGray,
+          }}
+        >
+          {icon}
+          <Typography
+            sx={{ color: colors.defaultGray, fontSize: 14, marginLeft: 0.4 }}
+          >
+            {label}
+          </Typography>
+        </div>
+      </InputLabel>
       <StyledSelect
-        value={value}
-        label={label}
+        label={
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            {icon}
+            <Typography>{label}</Typography>
+          </div>
+        }
         sx={{
           color: colors.white,
-          minWidth: 120,
+          backgroundColor: colors.lightCard,
+          borderRadius: 3,
         }}
         onChange={onChange}
       >

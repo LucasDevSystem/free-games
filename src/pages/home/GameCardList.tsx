@@ -16,7 +16,7 @@ interface GameCardListProps {
 // Lista dos cards dos jogos responsivas
 const GameCardList = ({ dataList = [], onFavorite }: GameCardListProps) => {
   const [curentPage, setCurentPage] = useState(1);
-  
+
   // faz a divisao e obtem o teto do valor
   const maxPages = Math.ceil(dataList.length / CARDS_PER_PAGE) || 1;
 
@@ -46,13 +46,13 @@ const GameCardList = ({ dataList = [], onFavorite }: GameCardListProps) => {
   return (
     <div
       style={{
-        paddingTop: 20,
+        paddingTop: 8,
         justifyContent: "center",
       }}
     >
       <Divider
         sx={{
-          width: "60%",
+          width: "80%",
           margin: "auto",
           paddingBottom: 3,
         }}

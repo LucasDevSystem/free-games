@@ -46,10 +46,11 @@ const theme = createTheme({
     MuiDivider: {
       styleOverrides: {
         root: {
-          borderColor: "#b8bbbf",
-          color: "#b8bbbf",
+          borderColor: colors.lightCard,
+          color: colors.green,
+          height: 20,
           "&::before, &::after": {
-            borderColor: "#b8bbbf",
+            borderColor: colors.darkGreen,
           },
         },
       },
@@ -63,7 +64,6 @@ const theme = createTheme({
         },
       },
     },
-    
   },
 });
 
