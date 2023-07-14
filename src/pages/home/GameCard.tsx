@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import { Star } from "@mui/icons-material";
+import { Star, Window } from "@mui/icons-material";
 
 import "./starAnimation.css";
 import { Game } from ".";
@@ -52,9 +52,10 @@ const GameCard: React.FC<GameCardProps> = ({
   return (
     <Card
       sx={{
-        width: "100%",
-        borderRadius: 4,
-        position: "relative",
+        minWidth: "60%",
+        maxWidth: "100%",
+
+        borderRadius: 3,
         "&:hover": {
           transform: "scale(1.1)",
           transition: "transform 0.2s ease-in-out",
@@ -68,68 +69,84 @@ const GameCard: React.FC<GameCardProps> = ({
       />
       <CardContent
         style={{
-          padding: 16,
-          display: "flex",
+          paddingLeft: 16,
+          paddingTop: 8,
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h5" fontWeight="bold">
-          {cardData.title}
-        </Typography>
-        <Button
-          color="info"
-          variant="contained"
-          size="small"
-          style={{
-            textTransform: "none",
-            padding: 4,
-            color: colors.white,
-            backgroundColor: colors.lightCard,
-          }}
-          disabled={true}
-        >
-          {cardData.genre}
-        </Button>
-      </CardContent>
-      <CardActions>
         <div
           style={{
             display: "flex",
-            borderRadius: 8,
-            margin: 10,
-            marginRight: "auto",
+            justifyContent: "space-between",
           }}
         >
-          {[...Array(5)].map((_, index) => (
-            <div
-              key={index}
-              onClick={() => handleStar(index + 1)}
-              style={{ color: stars > index ? colors.gold : colors.white }}
-              className={`star ${stars > index ? "selected" : ""}`}
-            >
-              <Star />
-            </div>
-          ))}
+          <Window sx={{ color: "#888889" }}></Window>
+          <Button
+            color="info"
+            variant="contained"
+            size="small"
+            style={{
+              textTransform: "none",
+              float: "right",
+              fontSize: 11,
+              fontWeight: "bold",
+              color: "#9ae7b4",
+              backgroundColor: "#354039",
+            }}
+            disabled={true}
+          >
+            {cardData.genre}
+          </Button>
         </div>
+
+        <Typography variant="h5" fontWeight="bold">
+          {cardData.title}
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ paddingTop: 0, paddingBottom: 1, paddingRight: 2 }}>
         <IconButton onClick={() => handleFavorite()} aria-label="settings">
           {!isFavorite ? (
             <FavoriteBorderIcon
               style={{
-                width: 36,
-                height: 36,
+                width: 32,
+                height: 32,
                 color: colors.white,
               }}
             />
           ) : (
             <FavoriteIcon
               style={{
-                width: 36,
-                height: 36,
+                width: 32,
+                height: 32,
                 color: colors.red,
               }}
             />
           )}
         </IconButton>
+        <div
+          style={{
+            display: "flex",
+            borderRadius: 8,
+
+            marginLeft: "auto",
+          }}
+        >
+          {[...Array(4)].map((_, index) => (
+            <div
+              key={index}
+              onClick={() => handleStar(index + 1)}
+              style={{ color: stars > index ? colors.gold : colors.white }}
+              className={`star ${stars > index ? "selected" : ""}`}
+            >
+              <Star
+                style={{
+                  width: 21,
+                  height: 21,
+                }}
+              />
+            </div>
+          ))}
+        </div>
       </CardActions>
     </Card>
   );
