@@ -22,7 +22,7 @@ const StyledSelect = styled(Select)`
 
 const CustomSelect = ({ label, options, value, onChange, icon }: any) => {
   return (
-    <FormControl sx={{ minWidth: 130, m: 1 }}>
+    <FormControl sx={{ minWidth: 130, m: 1, padding:0 }}>
       <InputLabel>
         <div
           style={{
@@ -55,7 +55,9 @@ const CustomSelect = ({ label, options, value, onChange, icon }: any) => {
           color: colors.white,
           backgroundColor: colors.lightCard,
           borderRadius: 3,
+          margin: 0,
         }}
+        size="medium"
         onChange={onChange}
       >
         {options.map((option: string) => (
