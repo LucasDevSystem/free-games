@@ -4,13 +4,17 @@ export function useQuery(query: Query, dataList: Game[]): Game[] {
   const { filters, sort } = query;
   // filtra por genero , favorito e texto
   const filtered = dataList.filter((game: Game) => {
-    const { genre, isFavorite, searchStr } = filters;
+    const { genre, isFavorite, searchStr, genres } = filters;
 
     if (isFavorite !== undefined && isFavorite !== game.isFavorite) {
       return false;
     }
 
     if (genre && game.genre !== genre && genre !== "Todos") {
+      return false;
+    }
+
+    if (genres?.length && !genres.includes(game.genre)) {
       return false;
     }
 

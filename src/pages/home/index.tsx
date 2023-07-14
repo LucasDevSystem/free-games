@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { Alert, CircularProgress, Snackbar } from "@mui/material";
+import { Alert, Box, CircularProgress, Snackbar, Toolbar } from "@mui/material";
 
 import GameCardList from "./GameCardList";
-import Search from "./Search";
 import TopBar from "./TopBar";
 import { favorite, readFavorites } from "../../firebase/firebaseService";
 import { useQuery } from "./hooks/useQuery";
@@ -10,7 +9,7 @@ import { AuthContext } from "../../App";
 import { getGenreOptions, mergeData } from "./utils";
 import AlertModal from "./AlertModal";
 import { useGameRequest } from "./hooks/useGameRequest";
-
+import ResponsiveDrawer from "./ResponsiveDrawer";
 /*
  @author Lucas Emanuel
 */
@@ -38,6 +37,7 @@ export interface Game extends ApiGame {
 export interface Query {
   filters: {
     genre?: string;
+    genres?: string[];
     stars?: number;
     isFavorite?: boolean;
     searchStr?: string;
@@ -58,14 +58,30 @@ interface ApiRequestHook {
   error: string;
   data: ApiGame[];
 }
-
-function HomePage() {
+interface Props {
+  /**
+   * Injected by the documentation to work in an iframe.
+   * You won't need it on your project.
+   */
+  window?: () => Window;
+}
+function HomePage(props: Props) {
   const authContext = useContext(AuthContext); // dados da autenticacao firebase
   const shouldReload = authContext?.currentUser?.uid; // sempre quando mudar usuario precisa atualizar
-  const [query, setQuery] = useState<Query>({ filters: {}, sort: {} }); // filtros por campos
+  const [query, setQuery] = useState<Query>({
+    filters: {
+      genres: [],
+    },
+    sort: {},
+  }); // filtros por campos
   const [favorites, setFavorites] = useState<Favorite[]>([]); // dados do firebase db
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { data, loading, error }: ApiRequestHook = useGameRequest(shouldReload);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const { window } = props;
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
 
   // merge entre api e firebase
   // atualiza a lista apenas quando as dependencias mudarem
@@ -95,10 +111,6 @@ function HomePage() {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  function onSearch(query: Query) {
-    setQuery(query);
   }
 
   //           CALLBACKS DOS COMPONENTES
@@ -133,37 +145,64 @@ function HomePage() {
     return "ERROR";
   }
 
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   useEffect(() => {
     getFavorites();
   }, [shouldReload]);
 
   return (
-    <div style={{ position: "relative", minHeight: "100vh" }}>
-      <TopBar user={authContext.currentUser} />
-      <AlertModal
-        isModalOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
-      <Snackbar
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        open={!!error}
-        message={error}
-      >
-        <Alert severity="error">{error}</Alert>
-      </Snackbar>
-      {loading ? (
-        <div style={{ position: "fixed", top: "50%", left: "50%" }}>
-          <CircularProgress />
-        </div>
-      ) : (
-        <div style={{ paddingLeft: "10%", paddingRight: "10%" }}>
-          <Search onSearch={onSearch} genreOptions={genreOptions} />
-          <GameCardList dataList={filteredData} onFavorite={favoriteGame} />
-        </div>
-      )}
+    <div>
+      <Box sx={{ display: "flex" }}>
+        <AlertModal
+          isModalOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
+        <Snackbar
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          open={!!error}
+          message={error}
+        >
+          <Alert severity="error">{error}</Alert>
+        </Snackbar>
+        <TopBar
+          onDrawerToggle={handleDrawerToggle}
+          user={authContext.currentUser}
+          onChangeQuery={(nextQuery: Query) => setQuery(nextQuery)}
+          query={query}
+        />
+        {loading && (
+          <div style={{ position: "fixed", top: "50%", left: "50%" }}>
+            <CircularProgress />
+          </div>
+        )}
+        <ResponsiveDrawer
+          onChangeQuery={(nextQuery: Query) => setQuery(nextQuery)}
+          genreOptions={genreOptions}
+          onDrawerToggle={handleDrawerToggle}
+          query={query}
+          container={container}
+          mobileOpen={mobileOpen}
+        />
+        {!loading && (
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              width: { sm: `calc(100% - ${240}px)` },
+            }}
+          >
+            <Toolbar />
+            <GameCardList dataList={filteredData} onFavorite={favoriteGame} />
+          </Box>
+        )}
+      </Box>
     </div>
   );
 }

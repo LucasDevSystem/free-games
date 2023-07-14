@@ -14,12 +14,24 @@ import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
 import { AuthContext } from "../../App";
 import { useContext } from "react";
+import { colors } from "../../global/colors";
+import { InputAdornment, TextField } from "@mui/material";
+import { Menu, SearchRounded } from "@mui/icons-material";
+import { Query } from ".";
 
 interface TopBarProps {
   user: { uid: string; email: string };
+  query: Query;
+  onChangeQuery: (query: Query) => void;
+  onDrawerToggle: () => void;
 }
 
-const TopBar = ({ user }: TopBarProps) => {
+const TopBar = ({
+  user,
+  onDrawerToggle,
+  query,
+  onChangeQuery,
+}: TopBarProps) => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
   const isLoged = !!(user.uid && user.email);
@@ -42,20 +54,35 @@ const TopBar = ({ user }: TopBarProps) => {
       });
   }
 
+  const onChangeTxt = (txt: string) => {
+    let nextQuery = { ...query };
+    nextQuery.filters.searchStr = txt;
+
+    onChangeQuery(nextQuery);
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ bgcolor: "#313238" }}>
+      <AppBar
+        position="fixed"
+        sx={{
+          bgcolor: "#1A1A1A",
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+          borderBottomRightRadius: 8,
+          borderBottomLeftRadius: 8,
+        }}
+      >
         <Toolbar>
           <IconButton
-            size="large"
-            edge="start"
             color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
+            aria-label="open drawer"
+            edge="start"
+            onClick={onDrawerToggle}
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
-            <VideogameAssetIcon />
+            <Menu />
           </IconButton>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -64,13 +91,41 @@ const TopBar = ({ user }: TopBarProps) => {
             sx={{ mr: 2 }}
           >
             <GitHubIcon />
-          </IconButton>
+          </IconButton> */}
+          <TextField
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <SearchRounded sx={{ color: "#edecec" }} />
+                </InputAdornment>
+              ),
+            }}
+            style={{
+              minWidth: 200,
+              maxWidth: 500,
+              width: 300,
+              backgroundColor: colors.lightCard,
+              borderRadius: 20,
+              borderWidth: 0,
+            }}
+            sx={{
+              "& fieldset": { border: "none" },
+              input: { color: "white" },
+              // m: 1,
+            }}
+            onInput={(e: any) => onChangeTxt(e.target.value)}
+            // value={text}
+            variant="outlined"
+            placeholder="Pesquisar..."
+            size="medium"
+          />
+
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
           {isLoged ? (
             <Button
               onClick={() => logout()}
               startIcon={<LogoutIcon></LogoutIcon>}
-              sx={{ textTransform: "none", fontSize: 16 }}
+              sx={{ textTransform: "none", fontSize: 14 }}
               color="inherit"
             >
               {user.email}
