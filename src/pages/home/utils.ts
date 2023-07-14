@@ -15,7 +15,7 @@ export const mergeData = (dataList: ApiGame[], favorites: Favorite[]) => {
 };
 
 export const getGenreOptions = (data: ApiGame[]) => {
-  let uniqueGenres: string[] = ["Todos"];
+  let uniqueGenres: string[] = [];
 
   data.forEach((game: ApiGame) => {
     if (!uniqueGenres.includes(game.genre)) {
