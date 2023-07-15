@@ -18,7 +18,6 @@ import CustomTextField from "../../components/CustomTextField";
 import { auth } from "../../firebase/firebase";
 import { colors } from "../../global/colors";
 
-
 const SignupPage = () => {
   // bastante useState :( talvez hookform seria ideal para um form maior
   const [email, setEmail] = useState("");
@@ -75,9 +74,16 @@ const SignupPage = () => {
       navigate("/login");
     } catch (error: any) {
       // algum erro inesperado notifica usuario :)
-      setApiError(
-        "Oops! Algo deu errado 😢. Por favor, verifique as informações."
-      );
+      if (error.code === "auth/email-already-in-use") {
+        setApiError(
+          "Este Email Ja esta em uso, tente outro."
+        );
+        setEmailError("email em uso")
+      } else {
+        setApiError(
+          "Oops! Algo deu errado 😢. Por favor, verifique as informações."
+        );
+      }
     }
   };
 
@@ -128,7 +134,7 @@ const SignupPage = () => {
               paddingLeft: 6,
               paddingRight: 6,
               paddingBottom: 6,
-              paddingTop:1
+              paddingTop: 1,
             }}
           >
             <CustomTextField
@@ -161,7 +167,7 @@ const SignupPage = () => {
               <Grid item xs>
                 <Link
                   fontSize={16}
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/auth/login")}
                   color={colors.green}
                 >
                   {"Ja tenha uma conta?"}

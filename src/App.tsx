@@ -90,8 +90,8 @@ function App() {
             <ThemeProvider theme={theme}>
               <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/auth/login" element={<LoginPage />} />
+                <Route path="/auth/signup" element={<SignupPage />} />
               </Routes>
             </ThemeProvider>
           </AuthContext.Provider>

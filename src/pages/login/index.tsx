@@ -119,7 +119,7 @@ const LoginPage = () => {
               <Grid item xs>
                 <Link
                   fontSize={16}
-                  onClick={() => navigate("/signup")}
+                  onClick={() => navigate("/auth/signup")}
                   color="#27b4a4"
                 >
                   {"Não tem uma conta?"}

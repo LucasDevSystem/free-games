@@ -37,7 +37,7 @@ const TopBar = ({
   const isLoged = !!(user.uid && user.email);
 
   function login() {
-    navigate("/login");
+    navigate("/auth/login");
   }
 
   function logout() {
@@ -111,10 +111,8 @@ const TopBar = ({
             sx={{
               "& fieldset": { border: "none" },
               input: { color: "white" },
-              // m: 1,
             }}
             onInput={(e: any) => onChangeTxt(e.target.value)}
-            // value={text}
             variant="outlined"
             placeholder="Pesquisar..."
             size="medium"
