@@ -1,12 +1,8 @@
-import { useState } from "react";
 import { Badge, Divider, Grid, Typography } from "@mui/material";
 
 import GameCard from "./GameCard";
-import FloatingPagination from "./FloatingPagination";
 import { Favorite, Game } from ".";
 import { colors } from "../../global/colors";
-
-const CARDS_PER_PAGE = 50;
 
 type actionResponse = "SUCCES" | "ERROR";
 
@@ -16,17 +12,6 @@ interface GameCardListProps {
 }
 // Lista dos cards dos jogos responsivas
 const GameCardList = ({ dataList = [], onFavorite }: GameCardListProps) => {
-  const [curentPage, setCurentPage] = useState(1);
-
-  // faz a divisao e obtem o teto do valor
-  const maxPages = Math.ceil(dataList.length / CARDS_PER_PAGE) || 1;
-
-  // // dados visiveis da pagina
-  // const cardsData = dataList.filter(
-  //   (game: Game, index: number) =>
-  //     index <= curentPage * CARDS_PER_PAGE &&
-  //     index >= (curentPage - 1) * CARDS_PER_PAGE
-  // );
   const cardsData = dataList;
 
   function onFavoriteAdapter(isFavorite: boolean, game: Game) {
@@ -76,10 +61,6 @@ const GameCardList = ({ dataList = [], onFavorite }: GameCardListProps) => {
           </Grid>
         ))}
       </Grid>
-      {/* <FloatingPagination
-        maxPages={maxPages}
-        onChagePage={(nexPage: number) => setCurentPage(nexPage)}
-      /> */}
     </div>
   );
 };

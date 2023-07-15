@@ -2,8 +2,18 @@ import { Box, Drawer } from "@mui/material";
 
 import { colors } from "../../global/colors";
 import DrawerFilters from "./DrawerFilters";
+import { Query } from ".";
 
 const drawerWidth = 240;
+
+interface ResponsiveDrawerProps {
+  container: any;
+  genreOptions: string[];
+  mobileOpen: boolean;
+  query: Query;
+  onChangeQuery: (qr: Query) => void;
+  onDrawerToggle: () => void;
+}
 
 const ResponsiveDrawer = ({
   container,
@@ -12,7 +22,7 @@ const ResponsiveDrawer = ({
   onChangeQuery,
   onDrawerToggle,
   genreOptions,
-}: any) => {
+}: ResponsiveDrawerProps) => {
   return (
     <Box
       component="nav"

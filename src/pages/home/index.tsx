@@ -37,9 +37,9 @@ export interface Game extends ApiGame {
 export interface Query {
   filters: {
     genre?: string;
-    genres?: string[];
+    genres: string[];
     stars?: number;
-    isFavorite?: boolean;
+    favorite?: string;
     searchStr?: string;
   };
   sort: {
@@ -59,10 +59,6 @@ interface ApiRequestHook {
   data: ApiGame[];
 }
 interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window?: () => Window;
 }
 function HomePage(props: Props) {

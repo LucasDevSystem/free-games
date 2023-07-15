@@ -6,7 +6,12 @@ import Typography from "@mui/material/Typography";
 import { Box, Divider, Modal } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function AlertModal({ isModalOpen, onClose }: any) {
+interface AlertModalProps {
+  onClose: () => void;
+  isModalOpen: boolean;
+}
+
+export default function AlertModal({ isModalOpen, onClose }: AlertModalProps) {
   const navigate = useNavigate();
   return (
     <Modal open={isModalOpen} onClose={onClose}>

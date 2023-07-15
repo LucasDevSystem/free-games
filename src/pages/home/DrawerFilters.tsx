@@ -7,9 +7,20 @@ import {
 } from "@mui/material";
 import { colors } from "../../global/colors";
 import { ArrowDownward, ArrowUpward, Star } from "@mui/icons-material";
+import { Query } from ".";
 
-const DrawerFilters = ({ genreOptions, query, onChangeQuery }: any) => {
+interface DrawerFiltersProps {
+  genreOptions: string[];
+  query: Query;
+  onChangeQuery: (qr: Query) => void;
+}
+const DrawerFilters = ({
+  genreOptions,
+  query,
+  onChangeQuery,
+}: DrawerFiltersProps) => {
   const genres = query?.filters?.genres || [];
+  const favorite = query?.filters?.favorite || "";
   const rating = query?.sort?.rating;
 
   const onCheckGenre = (genre: string) => {
@@ -31,6 +42,12 @@ const DrawerFilters = ({ genreOptions, query, onChangeQuery }: any) => {
     let nextQuery = { ...query };
     nextQuery.sort.rating =
       nextQuery?.sort?.rating === "Melhores" ? "Piores" : "Melhores";
+
+    onChangeQuery(nextQuery);
+  };
+  const onCheckFavorite = (opt: string) => {
+    let nextQuery = { ...query };
+    nextQuery.filters.favorite = opt;
 
     onChangeQuery(nextQuery);
   };
@@ -84,23 +101,20 @@ const DrawerFilters = ({ genreOptions, query, onChangeQuery }: any) => {
       >
         Avaliação
       </Button>
-      {/* <Typography fontWeight={"bold"} fontSize={20}>
+      <Typography fontWeight={"bold"} fontSize={20}>
         Favorito
       </Typography>
-      <FormControlLabel
-        control={
-          <Checkbox sx={{ margin: 0, padding: 0.4, color: "#354039" }} />
-        }
-        sx={{ margin: 0, display: "flex" }}
-        label={<Typography color={colors.ligthGray}>Todos</Typography>}
-      />
-      <FormControlLabel
-        control={
-          <Checkbox sx={{ margin: 0, padding: 0.4, color: "#354039" }} />
-        }
-        sx={{ margin: 0, display: "flex" }}
-        label={<Typography color={colors.ligthGray}>Favoritos</Typography>}
-      /> */}
+      {["Todos", "Favoritos", "Não favoritos"].map((opt) => (
+        <FormControlLabel
+          checked={opt === favorite}
+          onClick={() => onCheckFavorite(opt)}
+          control={
+            <Checkbox sx={{ margin: 0, padding: 0.4, color: "#354039" }} />
+          }
+          sx={{ margin: 0, display: "flex" }}
+          label={<Typography color={colors.ligthGray}>{opt}</Typography>}
+        />
+      ))}
       <Typography fontWeight={"bold"} fontSize={20}>
         Generos
       </Typography>

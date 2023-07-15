@@ -4,9 +4,10 @@ export function useQuery(query: Query, dataList: Game[]): Game[] {
   const { filters, sort } = query;
   // filtra por genero , favorito e texto
   const filtered = dataList.filter((game: Game) => {
-    const { genre, isFavorite, searchStr, genres } = filters;
+    const { genre, favorite, searchStr, genres } = filters;
+    const favOpt = game.isFavorite ? "Favoritos" : "Não favoritos";
 
-    if (isFavorite !== undefined && isFavorite !== game.isFavorite) {
+    if (favorite !== undefined && favorite !== favOpt && favorite !== "Todos") {
       return false;
     }
 
