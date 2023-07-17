@@ -71,7 +71,7 @@ const SignupPage = () => {
 
       await createUserWithEmailAndPassword(auth, email, password);
 
-      navigate("/login");
+      navigate("/auth/login");
     } catch (error: any) {
       // algum erro inesperado notifica usuario :)
       if (error.code === "auth/email-already-in-use") {

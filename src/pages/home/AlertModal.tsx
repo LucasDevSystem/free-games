@@ -48,7 +48,7 @@ export default function AlertModal({ isModalOpen, onClose }: AlertModalProps) {
             <Button
               size="small"
               sx={{ bgcolor: "#27b4a4" }}
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/auth/login")}
               variant="contained"
             >
               Fazer login
