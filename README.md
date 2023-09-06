@@ -1,5 +1,7 @@
-#  Descubra um jogo
+#  Descubra jogos gratuitos
+
 Você gosta de procurar jogos gratuitos?
+
 Então está no lugar certo! Descubra novos jogos com este projeto. Ele foi desenvolvido usando React,
 com responsividade para dispositivos móveis e computadores, incluindo tratamento de erros 
 provenientes das requisições e notificações para o usuário.
