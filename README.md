@@ -1,9 +1,15 @@
 #  Descubra um jogo
-Voce gosta de jogos porem esta procurando um jogo? 
-Entao e aqui mesmo, descubra novos jogos com este projeto.
-Este projeto foi desenvolvido usando React, com responsividade para dispositivos moveis e computador.Incluind tratmanto de erros vindo da requisicao e notificando o usuario.
+Você gosta de procurar jogos gratuitos?
+Então está no lugar certo! Descubra novos jogos com este projeto. Ele foi desenvolvido usando React,
+com responsividade para dispositivos móveis e computadores, incluindo tratamento de erros 
+provenientes das requisições e notificações para o usuário.
 
-## Demo 
+# Tecnologias
+
+- React
+- Firebase 
+
+## Demonstracão Computador e Mobile
 ![App Screenshot](https://github.com/LucasDevSystem/react-mui-axios-demo/blob/main/public/site_computador.png?raw=true)  
 ![App Screenshot](https://github.com/LucasDevSystem/react-mui-axios-demo/blob/main/public/site_dispositivo_movel.png?raw=true)  
 
