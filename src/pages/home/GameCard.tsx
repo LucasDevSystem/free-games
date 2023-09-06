@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo } from "react";
 import {
   Button,
   Card,
@@ -24,29 +24,35 @@ type GameCardProps = {
   onFavorite: (isFav: boolean) => Promise<actionResponse>;
 };
 
-const GameCard: React.FC<GameCardProps> = ({
+// renderiza apenas o card modificado
+function arePropsEqual(prev: GameCardProps, next: GameCardProps) {
+  if (
+    prev.cardData.stars !== next.cardData.stars ||
+    prev.cardData.isFavorite !== next.cardData.isFavorite
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+const GameCard = memo(function GameCard({
   cardData,
   onStar,
   onFavorite,
-}) => {
-  const [stars, setStars] = useState(cardData.stars);
-  const [isFavorite, setIsFavorite] = useState(cardData.isFavorite);
-  const [isStarSuccess, setIsStarSuccess] = useState(false);
+}: GameCardProps) {
+  const { stars, isFavorite, game_url } = cardData;
 
   async function handleStar(stars: number) {
-    const result: any = await onStar(stars);
-    if (result === "SUCCES") {
-      setStars(stars);
-      setIsStarSuccess(!isStarSuccess);
-    }
+    await onStar(stars);
   }
 
   async function handleFavorite() {
-    const result: any = await onFavorite(!isFavorite);
-
-    if (result === "SUCCES") {
-      setIsFavorite(!isFavorite);
-    }
+    await onFavorite(!isFavorite);
+  }
+  // abre em uma nova aba
+  function onVisitGame() {
+    window.open(game_url, '_blank');
   }
 
   return (
@@ -54,7 +60,6 @@ const GameCard: React.FC<GameCardProps> = ({
       sx={{
         minWidth: "60%",
         maxWidth: "100%",
-
         borderRadius: 3,
         "&:hover": {
           transform: "scale(1.1)",
@@ -62,11 +67,13 @@ const GameCard: React.FC<GameCardProps> = ({
         },
       }}
     >
-      <CardMedia
-        sx={{ height: 240, width: "100%" }}
-        image={cardData.thumbnail}
-        title={cardData.title}
-      />
+      <div onClick={() => onVisitGame()}>
+        <CardMedia
+          sx={{ height: 240, width: "100%" }}
+          image={cardData.thumbnail}
+          title={cardData.title}
+        />
+      </div>
       <CardContent
         style={{
           paddingLeft: 16,
@@ -150,6 +157,7 @@ const GameCard: React.FC<GameCardProps> = ({
       </CardActions>
     </Card>
   );
-};
+},
+arePropsEqual);
 
 export default GameCard;
