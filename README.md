@@ -20,7 +20,7 @@ provenientes das requisições e notificações para o usuário.
 Clone o projeto
 
 ~~~bash  
-  git clone https://github.com/LucasDevSystem/react-mui-axios-demo
+  git clone https://github.com/LucasDevSystem/free-games.git
 ~~~
 
 Va para o diretorio do projeto 
