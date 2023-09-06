@@ -33,10 +33,24 @@ Instale as dependencias
 npm install
 ~~~
 
-Va ate o arquivo .env e adicone o link da api 
+Va ate o arquivo .env e configure a api de jogos
+para saber mais visite: https://rapidapi.com/digiwalls/api/free-to-play-games-database
 
 ~~~bash  
 REACT_APP_API_URL=link da api
+REACT_APP_API_KEY= chave da api
+REACT_APP_API_HOST= host da api
+~~~
+
+No mesmo arquivo .env configure o firebase
+para saber mais visite: https://firebase.google.com/docs/web/setup
+
+~~~bash  
+ 
+REACT_APP_FIREBASE_API_KEY= firebase api key
+REACT_APP_FIREBASE_AUTH_DOMAIN= dominio
+REACT_APP_FIREBASE_DATABASE_URL= url do realtime database
+REACT_APP_FIREBASE_PROJECT_ID= id do projeto
 ~~~
 
 Inicie o projeto localmente
