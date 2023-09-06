@@ -20,7 +20,7 @@ const DrawerFilters = ({
   onChangeQuery,
 }: DrawerFiltersProps) => {
   const genres = query?.filters?.genres || [];
-  const favorite = query?.filters?.favorite || "";
+  const favorite = query?.filters?.favorite || "Todos";
   const rating = query?.sort?.rating;
 
   const onCheckGenre = (genre: string) => {
@@ -104,17 +104,20 @@ const DrawerFilters = ({
       <Typography fontWeight={"bold"} fontSize={20}>
         Favorito
       </Typography>
-      {["Todos", "Favoritos", "Não favoritos"].map((opt) => (
-        <FormControlLabel
-          checked={opt === favorite}
-          onClick={() => onCheckFavorite(opt)}
-          control={
-            <Checkbox sx={{ margin: 0, padding: 0.4, color: "#354039" }} />
-          }
-          sx={{ margin: 0, display: "flex" }}
-          label={<Typography color={colors.ligthGray}>{opt}</Typography>}
-        />
-      ))}
+      <FormGroup>
+        {["Todos", "Favoritos", "Não favoritos"].map((opt) => (
+          <FormControlLabel
+            key={opt}
+            checked={opt === favorite}
+            onClick={() => onCheckFavorite(opt)}
+            control={
+              <Checkbox sx={{ margin: 0, padding: 0.4, color: "#354039" }} />
+            }
+            sx={{ margin: 0 }}
+            label={<Typography color={colors.ligthGray}>{opt}</Typography>}
+          />
+        ))}
+      </FormGroup>
       <Typography fontWeight={"bold"} fontSize={20}>
         Generos
       </Typography>
