@@ -18,7 +18,7 @@ export interface ApiGame {
   title: string;
   thumbnail: string;
   short_description: string;
-  gamer_url: string;
+  game_url: string;
   genre: string;
   platform: string;
   publisher: string;
@@ -74,8 +74,11 @@ function HomePage(props: Props) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { data, loading, error }: ApiRequestHook = useGameRequest(shouldReload);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { window } = props;
+  const [firebaseLoading, setFirebaseLoading] = useState(false);
 
+  const dbOrApiLoading = loading || firebaseLoading;
+  
+  const { window } = props;
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
@@ -85,7 +88,6 @@ function HomePage(props: Props) {
     () => mergeData(data, favorites),
     [favorites, data]
   );
-
   //     DADOS TRATADOS PARA COMPONENTES
   // aplica os filtros nos dados
   const filteredData = useQuery(query, mergedData);
@@ -95,6 +97,7 @@ function HomePage(props: Props) {
   //lista de jogos favoritados
   async function getFavorites() {
     try {
+      setFirebaseLoading(true);
       const userId: string = authContext?.currentUser?.uid;
 
       if (!userId) {
@@ -106,6 +109,8 @@ function HomePage(props: Props) {
       setFavorites(response);
     } catch (error) {
       console.log(error);
+    } finally {
+      setFirebaseLoading(false);
     }
   }
 
@@ -129,7 +134,12 @@ function HomePage(props: Props) {
         let toUpdateIndex = favorites.findIndex(
           (item) => item?.gameId === gameData.gameId
         );
-        next[toUpdateIndex] = gameData;
+
+        if (toUpdateIndex < 0) {
+          next.push(gameData);
+        } else {
+          next[toUpdateIndex] = gameData;
+        }
 
         return next;
       });
@@ -172,7 +182,7 @@ function HomePage(props: Props) {
           onChangeQuery={(nextQuery: Query) => setQuery(nextQuery)}
           query={query}
         />
-        {loading && (
+        {dbOrApiLoading && (
           <div style={{ position: "fixed", top: "50%", left: "50%" }}>
             <CircularProgress />
           </div>
@@ -185,7 +195,7 @@ function HomePage(props: Props) {
           container={container}
           mobileOpen={mobileOpen}
         />
-        {!loading && (
+        {!dbOrApiLoading && (
           <Box
             component="main"
             sx={{
