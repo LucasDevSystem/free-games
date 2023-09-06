@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 import { ApiGame } from "..";
 import api from "../../../api";
@@ -59,7 +59,8 @@ export const useGameRequest = (shouldUpdate: string) => {
       if (loading) return;
       setLoading(true);
       try {
-        const { data = Array<ApiGame> } = await api.get("/data/");
+        const { data = Array<ApiGame> } = await api.get("/games");
+
         setData(data);
       } catch (error: any) {
         handleReqType(getRequestErrType(error));
