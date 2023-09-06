@@ -55,73 +55,68 @@ const DrawerFilters = ({
   return (
     <div
       style={{
-        minWidth: 220,
         padding: 20,
         marginRight: 20,
         marginLeft: 20,
         marginTop: 80,
-        overflowY: "auto",
-        height: "100%",
         borderRadius: 16,
         backgroundColor: "#1A1A1A",
         scrollbarWidth: "thin",
       }}
     >
-      <Typography fontWeight={"bold"} fontSize={20}>
-        Ordenar
-      </Typography>
-      <Button
-        sx={{
-          minWidth: 130,
-          borderWidth: 0,
-          textTransform: "none",
-          fontWeight: "bold",
-          fontSize: 16,
-          color: colors.defaultGray,
-          backgroundColor: colors.background,
-          borderRadius: 3,
-          ":hover": {
-            bgcolor: colors.lightCard,
-          },
-          float: "left",
-        }}
-        onClick={() => onSort()}
-        startIcon={
-          <Star
-            sx={{
-              height: 20,
-              width: 20,
-              color: rating === "Melhores" ? colors.gold : colors.white,
-            }}
-            fontSize="small"
-          />
-        }
-        endIcon={rating === "Melhores" ? <ArrowUpward /> : <ArrowDownward />}
-        size="medium"
-      >
-        Avaliação
-      </Button>
-      <Typography fontWeight={"bold"} fontSize={20}>
-        Favorito
-      </Typography>
-      <FormGroup>
-        {["Todos", "Favoritos", "Não favoritos"].map((opt) => (
-          <FormControlLabel
-            key={opt}
-            checked={opt === favorite}
-            onClick={() => onCheckFavorite(opt)}
-            control={
-              <Checkbox sx={{ margin: 0, padding: 0.4, color: "#354039" }} />
-            }
-            sx={{ margin: 0 }}
-            label={<Typography color={colors.ligthGray}>{opt}</Typography>}
-          />
-        ))}
-      </FormGroup>
-      <Typography fontWeight={"bold"} fontSize={20}>
-        Generos
-      </Typography>
-      {
+      <div>
+        <Typography fontWeight={"bold"} fontSize={20}>
+          Ordenar
+        </Typography>
+        <Button
+          sx={{
+            color: colors.defaultGray,
+            backgroundColor: colors.background,
+            borderRadius: 3,
+            ":hover": {
+              bgcolor: colors.lightCard,
+            },
+          }}
+          onClick={() => onSort()}
+          startIcon={
+            <Star
+              sx={{
+                height: 20,
+                width: 20,
+                color: rating === "Melhores" ? colors.gold : colors.white,
+              }}
+              fontSize="small"
+            />
+          }
+          endIcon={rating === "Melhores" ? <ArrowUpward /> : <ArrowDownward />}
+          size="medium"
+        >
+          Avaliação
+        </Button>
+      </div>
+      <div>
+        <Typography fontWeight={"bold"} fontSize={20}>
+          Favorito
+        </Typography>
+        <FormGroup>
+          {["Todos", "Favoritos", "Não favoritos"].map((opt) => (
+            <FormControlLabel
+              key={opt}
+              checked={opt === favorite}
+              onClick={() => onCheckFavorite(opt)}
+              control={
+                <Checkbox sx={{ margin: 0, padding: 0.4, color: "#354039" }} />
+              }
+              sx={{ margin: 0 }}
+              label={<Typography color={colors.ligthGray}>{opt}</Typography>}
+            />
+          ))}
+        </FormGroup>
+        <Typography fontWeight={"bold"} fontSize={20}>
+          Generos
+        </Typography>
+      </div>
+      <div>
         <FormGroup>
           {genreOptions.map((genre: any) => (
             <FormControlLabel
@@ -136,7 +131,7 @@ const DrawerFilters = ({
             />
           ))}
         </FormGroup>
-      }
+      </div>
     </div>
   );
 };
