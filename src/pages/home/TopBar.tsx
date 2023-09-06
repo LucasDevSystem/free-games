@@ -6,9 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import LoginIcon from "@mui/icons-material/Login";
-import VideogameAssetIcon from "@mui/icons-material/VideogameAsset";
 import LogoutIcon from "@mui/icons-material/Logout";
-import GitHubIcon from "@mui/icons-material/GitHub";
 
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
@@ -82,16 +80,7 @@ const TopBar = ({
           >
             <Menu />
           </IconButton>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            href="https://github.com/LucasDevSystem"
-            sx={{ mr: 2 }}
-          >
-            <GitHubIcon />
-          </IconButton> */}
+
           <TextField
             InputProps={{
               endAdornment: (
@@ -117,27 +106,55 @@ const TopBar = ({
             placeholder="Pesquisar..."
             size="medium"
           />
-
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
-          {isLoged ? (
-            <Button
-              onClick={() => logout()}
-              startIcon={<LogoutIcon></LogoutIcon>}
-              sx={{ textTransform: "none", fontSize: 14 }}
-              color="inherit"
-            >
-              {user.email}
-            </Button>
-          ) : (
-            <Button
-              onClick={() => login()}
-              startIcon={<LoginIcon></LoginIcon>}
-              sx={{ textTransform: "none", fontSize: 16 }}
-              color="inherit"
-            >
-              Entrar
-            </Button>
-          )}
+
+          <div style={{ padding: 4 }}>
+            {isLoged ? (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: 100,
+                }}
+              >
+                <Button
+                  onClick={() => logout()}
+                  startIcon={<LogoutIcon></LogoutIcon>}
+                  sx={{
+                    textTransform: "none",
+                    fontSize: 14,
+                    padding:0,
+                    textAlign: "center",
+                  }}
+                  color="inherit"
+                >
+                  Sair
+                </Button>
+                <Typography
+                  style={{
+                    textAlign: "center",
+                    fontSize: 12,
+                    maxWidth: "150px", 
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                  fontSize={12}
+                >
+                  {user.email}
+                </Typography>
+              </div>
+            ) : (
+              <Button
+                onClick={() => login()}
+                startIcon={<LoginIcon></LoginIcon>}
+                sx={{ textTransform: "none", fontSize: 16 }}
+                color="inherit"
+              >
+                Entrar
+              </Button>
+            )}
+          </div>
         </Toolbar>
       </AppBar>
     </Box>
